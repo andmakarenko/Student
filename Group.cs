@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -15,7 +17,7 @@ class Group
     string groupName;
     string specialization;
     int courseID;
-    List<Student> students;
+    public List<Student> students;
 
     private void generateStudents()
     {
@@ -61,9 +63,17 @@ class Group
         string output = "";
         string[] names = new string[students.Count];
 
-        for (int i = 0; i < names.Length; i++)
+        try
         {
-            names[i] = students[i].getLastName() + " " + students[i].getName() + "| ID - " + students[i].getID();
+            for (int i = 0; i < names.Length; i++)
+            {
+                names[i] = students[i].getLastName() + " " + students[i].getName() + "| ID - " + students[i].getID();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"GetStudentNames failed: {e.Message}");
+            return output;
         }
 
         Array.Sort(names);
@@ -90,47 +100,63 @@ class Group
 
     public void addStudent(Student student)
     {
-        if (student == null)
+
+
+        try
         {
-            return;
+            if (student == null)
+                throw new Exception("Cant add a null object to the student list.");
+
+
+            if (students.Contains(student))
+            {
+                Console.WriteLine("The student is already in the group.");
+                return;
+            }
+            students.Add(student);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"AddStudent failed: {e.Message}");
         }
 
-        if (students.Contains(student))
-        {
-            Console.WriteLine("The student is already in the group.");
-            return;
-        }
-
-        students.Add(student);
     }
 
     public void changeGroups(int ID, ref Group second)
     {
-        if (second == null)
+        
+        try
         {
-            Console.WriteLine("Null reference not allowed.");
-            return;
-        }
+            if (second == null)
+                throw new NullReferenceException();
 
-        if (ID > students.Count || ID < 1)
-        {
-            Console.WriteLine("ID out of range.");
-            return;
-        }
+            if (ID > students.Count || ID < 1)
+                throw new IndexOutOfRangeException();
 
-        for (int i = 0; i < students.Count; i++)
-        {
-            if (students[i].getID() == ID)
+            for (int i = 0; i < students.Count; i++)
             {
-                second.students.Add(students[i]);
-                students.Remove(students[i]);
+                if (students[i].getID() == ID)
+                {
+                    second.students.Add(students[i]);
+                    students.Remove(students[i]);
+                }
             }
-        }
 
+        }
+        catch (NullReferenceException)
+        {
+            Console.WriteLine("Cant change groups: Second group is null.");
+        }
+        catch (IndexOutOfRangeException)
+        {
+            Console.WriteLine("Cant change groups: Index out of range.");
+        }
     }
 
     public void exmatriculate()
     {
+        try
+        {
         for (int i = 0; i < students.Count; i++)
         {
             if (students[i].getExamsAvg() < MIN_EXAM_MARK)
@@ -138,20 +164,34 @@ class Group
                 students.Remove(students[i]);
             }
         }
-    }
-
-    public void exmatriculateWorst()
-    {
-        int indWorst = 0;
-
-        for (int i = 1; i < students.Count; i++)
-        {
-            if (students[i].getMarkAvg() < students[indWorst].getMarkAvg())
-            {
-                indWorst = i;
-            }
         }
-        students.Remove(students[indWorst]);
+        catch (NullReferenceException e)
+        {
+            Console.WriteLine($"Exmatriculate failed: {e.Message}");
+        }
+
+}
+
+public void exmatriculateWorst()
+    {
+
+        try
+        {
+            int indWorst = 0;
+
+            for (int i = 1; i < students.Count; i++)
+            {
+                if (students[i].getMarkAvg() < students[indWorst].getMarkAvg())
+                {
+                    indWorst = i;
+                }
+            }
+            students.Remove(students[indWorst]);
+        }
+        catch(NullReferenceException e)
+        {
+            Console.WriteLine($"ExmatriculateWorst failed: {e.Message}");
+        }
     }
 
     public void setGroupName(string name)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,11 +24,7 @@ class Student
 
     public Student(string name, string lastName) :
         this(name, lastName, new Address(), DateTime.Now)
-    {
-        marks = new List<int>();
-        hw = new List<int>();
-        exams = new List<int>();
-    }
+    { }
 
     public Student(string name, string lastName, Address address, DateTime birthDate)
     {
@@ -50,24 +47,40 @@ class Student
     {
 
         Random rand = new Random();
-        for (int i = 0; i < 10; i++)
+
+        try
         {
-            marks.Add(rand.Next(2, 12));
-            hw.Add(rand.Next(2, 12));
-            exams.Add(rand.Next(2, 12));
+            for (int i = 0; i < 10; i++)
+            {
+                marks.Add(rand.Next(2, 12));
+                hw.Add(rand.Next(2, 12));
+                exams.Add(rand.Next(2, 12));
+            }
         }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Generation failed: {e.Message}");
+        }
+
     }
 
     public float getExamsAvg()
     {
         float avg = 0;
 
-        foreach (int mark in getExams())
+        try
         {
-            avg += (float)mark;
-        }
+            foreach (int mark in getExams())
+            {
+                avg += (float)mark;
+            }
 
-        avg /= getExams().Count;
+            avg /= getExams().Count;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"GetExamsAvg failed: {e.Message}");
+        }
 
         return avg;
     }
@@ -76,12 +89,19 @@ class Student
     {
         float avg = 0;
 
-        foreach (int mark in getMarks())
+        try
         {
-            avg += (float)mark;
-        }
+            foreach (int mark in getMarks())
+            {
+                avg += (float)mark;
+            }
 
-        avg /= getMarks().Count;
+            avg /= getMarks().Count;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"GetMrksAvg failed: {e.Message}");
+        }
 
         return avg;
     }
@@ -115,7 +135,7 @@ class Student
 
     public void setMarks(List<int> marks)
     { this.marks = marks; }
-
+    
     public List<int> getHw()
     { return hw; }
 
