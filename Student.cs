@@ -11,12 +11,66 @@ class Student
 
     string name;
     string lastName;
-    Address address;
-    DateTime birthDate;
-    List<int> marks;
-    List<int> hw;
-    List<int> exams;
-    int id;
+
+    public Address Address
+    {
+        get; set;
+    }
+
+    public DateTime BirthDate
+    {
+        get; set;
+    }
+
+    public List<int> Marks
+    {
+        get; set;
+    }
+
+    public List<int> Hw
+    {
+        get; set;
+    }
+
+    public List<int> Exams
+    {
+        get; set;
+    }
+
+    public int Id
+    { get; }
+
+    public string Name
+    {
+        get
+        {
+            return name;
+        }
+        private set
+        {
+            if (value.Length < 3)
+            {
+                throw new Exception("Names shorter than 3 characters not allowed.");
+            }
+            name = value;
+        }
+    }
+
+    public string LastName
+    {
+        get
+        {
+            return lastName;
+        }
+        private set
+        {
+            if (value.Length < 3)
+            {
+                throw new Exception("Last names shorter than 3 characters not allowed.");
+            }
+            lastName = value;
+        }
+    }
 
     public Student() :
         this("defName", "defLastName")
@@ -28,19 +82,19 @@ class Student
 
     public Student(string name, string lastName, Address address, DateTime birthDate)
     {
-        setName(name);
-        setLastName(lastName);
-        setAddress(address);
-        setBirthDate(birthDate);
+        Name = name;
+        LastName = lastName;
+        Address = address;
+        BirthDate = birthDate;
 
-        marks = new List<int>();
-        hw = new List<int>();
-        exams = new List<int>();
+        Marks = new List<int>();
+        Hw = new List<int>();
+        Exams = new List<int>();
 
 
         generateCollections();
 
-        id = ++ID_gen;
+        Id = ++ID_gen;
     }
 
     private void generateCollections()
@@ -52,9 +106,9 @@ class Student
         {
             for (int i = 0; i < 10; i++)
             {
-                marks.Add(rand.Next(2, 12));
-                hw.Add(rand.Next(2, 12));
-                exams.Add(rand.Next(2, 12));
+                Marks.Add(rand.Next(2, 12));
+                Hw.Add(rand.Next(2, 12));
+                Exams.Add(rand.Next(2, 12));
             }
         }
         catch (Exception e)
@@ -70,12 +124,12 @@ class Student
 
         try
         {
-            foreach (int mark in getExams())
+            foreach (int mark in Exams)
             {
                 avg += (float)mark;
             }
 
-            avg /= getExams().Count;
+            avg /= Exams.Count;
         }
         catch (Exception e)
         {
@@ -91,12 +145,12 @@ class Student
 
         try
         {
-            foreach (int mark in getMarks())
+            foreach (int mark in Marks)
             {
                 avg += (float)mark;
             }
 
-            avg /= getMarks().Count;
+            avg /= Marks.Count;
         }
         catch (Exception e)
         {
@@ -105,55 +159,12 @@ class Student
 
         return avg;
     }
-
-    public string getName()
-    { return name; }
-
-    public void setName(string name)
-    { this.name = name; }
-
-    public string getLastName()
-    { return lastName; }
-
-    public void setLastName(string lastName)
-    { this.lastName = lastName; }
-
-    public Address getAddress()
-    { return address; }
-
-    public void setAddress(Address address)
-    { this.address = address; }
-
-    public DateTime getBirthDate()
-    { return birthDate; }
-
-    public void setBirthDate(DateTime birthDate)
-    { this.birthDate = birthDate; }
-
-    public List<int> getMarks()
-    { return marks; }
-
-    public void setMarks(List<int> marks)
-    { this.marks = marks; }
     
-    public List<int> getHw()
-    { return hw; }
 
-    public void setHw(List<int> hw)
-    { this.hw = hw; }
-
-    public List<int> getExams()
-    { return exams; }
-
-    public void setExams(List<int> exams)
-    { this.exams = exams; }
-
-    public int getID()
-    { return id; }
 
     public override string ToString()
     {
-        return ($"{string.Join(" ", lastName)} {string.Join(" ", name)} |Address:{address.ToString()}|Date of Birth: {birthDate.ToString()}\nMarks: {string.Join(" ", marks)}\nHw: {string.Join(" ", hw)}\nExams: {string.Join(" ", exams)}");
+        return ($"{string.Join(" ", lastName)} {string.Join(" ", name)} |Address:{Address.ToString()}|Date of Birth: {BirthDate.ToString()}\nMarks: {string.Join(" ", Marks)}\nHw: {string.Join(" ", Hw)}\nExams: {string.Join(" ", Exams)}");
     }
 
     public static Boolean operator ==(Student left, Student right)

@@ -18,11 +18,11 @@ namespace StudentClass
             Group g1 = new Group();
             Group g2 = new Group();
             Group g3 = new Group();
-            
-            g1.setGroupName("Group 1");
-            g1.setSpec("Computer Science");
-            g2.setGroupName("Group 2");
-            g2.setSpec("Visual Computing");
+
+            g1.GroupName = "Group 1";
+            g1.Specialization = "Computer Science";
+            g2.GroupName = "Group 2";
+            g2.Specialization = "Visual Computing";
             
             Console.WriteLine(g1.ToString());
             
@@ -63,12 +63,11 @@ namespace StudentClass
             List<int> testList = new List<int>{1,2,3,4,5,6,7,8,9,10,11 };
             List<int> testListNull = null;
 
-            testStudent.setExams(testListNull);
+            testStudent.Exams = testListNull;
             Console.WriteLine($"{testStudent.getExamsAvg()}"); //cant get avg if exams list is null
             testGroup.addStudent(testStudentNull);             // cant add null obj
             testGroup.changeGroups(1, ref testGroupNull);      // second group null
             testGroup.changeGroups(3000, ref testGroup2);      // student id 3000 - out of range 
-            testGroup.students = null;                         //
             testGroup.exmatriculate();                         // if students == null throw nullref
 
 

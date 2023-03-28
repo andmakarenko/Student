@@ -15,9 +15,36 @@ class Group
     const int MIN_EXAM_MARK = 7;
 
     string groupName;
-    string specialization;
-    int courseID;
-    public List<Student> students;
+
+    public string GroupName
+    {
+        get
+        {
+            return groupName;
+        }
+        set
+        {
+            if (value.Length < 3)
+                throw new Exception("Group name under 3 characters not allowed.");
+
+            groupName = value;
+        }
+    }
+
+    public string Specialization
+    {
+        get; set;
+    }
+
+    public int CourseId
+    {
+        get; private set;
+    }
+
+    public List<Student> Students
+    {
+        get; set;
+    }
 
     private void generateStudents()
     {
@@ -28,46 +55,46 @@ class Group
 
         for (int i = 0; i < DEFAULT_STUDENT_NUM; i++)
         {
-            students.Add(new Student(firstNames[rand.Next(0, firstNames.Length - 1)], lastNames[rand.Next(0, lastNames.Length - 1)]));
+            Students.Add(new Student(firstNames[rand.Next(0, firstNames.Length - 1)], lastNames[rand.Next(0, lastNames.Length - 1)]));
         }
     }
 
     public Group() :
         this("GroupName", "Spec", 0)
     {
-        students = new List<Student>();
+        Students = new List<Student>();
         generateStudents();
     }
 
     public Group(string name, string spec, int courseID)
     {
-        setGroupName(name);
-        setSpec(spec);
-        setID(courseID);
+        GroupName = name;
+        Specialization = spec;
+        CourseId = courseID;
     }
 
     public Group(List<Student> students) :
         this("GroupName", "Spec", 0)
     {
-        this.students = students;
+        Students = students;
     }
 
     public Group(Group group) :
-        this(group.getGroupName(), group.getSpec(), group.getID())
+        this(group.GroupName, group.Specialization, group.CourseId)
     {
-        students = group.students;
+        Students = group.Students;
     }
 
     private string GetStudentNames()
     {
         string output = "";
-        string[] names = new string[students.Count];
+        string[] names = new string[Students.Count];
 
         try
         {
             for (int i = 0; i < names.Length; i++)
             {
-                names[i] = students[i].getLastName() + " " + students[i].getName() + "| ID - " + students[i].getID();
+                names[i] = Students[i].LastName + " " + Students[i].Name + "| ID - " + Students[i].Id;
             }
         }
         catch (Exception e)
@@ -91,7 +118,7 @@ class Group
     {
         string output = "";
 
-        output += $"\t\tGroup Info:\nGroup Name: {groupName}|Specialization: {specialization}\n";
+        output += $"\t\tGroup Info:\nGroup Name: {groupName}|Specialization: {Specialization}\n";
         output += "Students:\n";
         output += GetStudentNames();
 
@@ -108,12 +135,12 @@ class Group
                 throw new Exception("Cant add a null object to the student list.");
 
 
-            if (students.Contains(student))
+            if (Students.Contains(student))
             {
                 Console.WriteLine("The student is already in the group.");
                 return;
             }
-            students.Add(student);
+            Students.Add(student);
         }
         catch (Exception e)
         {
@@ -130,15 +157,15 @@ class Group
             if (second == null)
                 throw new NullReferenceException();
 
-            if (ID > students.Count || ID < 1)
+            if (ID > Students.Count || ID < 1)
                 throw new IndexOutOfRangeException();
 
-            for (int i = 0; i < students.Count; i++)
+            for (int i = 0; i < Students.Count; i++)
             {
-                if (students[i].getID() == ID)
+                if (Students[i].Id == ID)
                 {
-                    second.students.Add(students[i]);
-                    students.Remove(students[i]);
+                    second.Students.Add(Students[i]);
+                    Students.Remove(Students[i]);
                 }
             }
 
@@ -157,11 +184,11 @@ class Group
     {
         try
         {
-        for (int i = 0; i < students.Count; i++)
+        for (int i = 0; i < Students.Count; i++)
         {
-            if (students[i].getExamsAvg() < MIN_EXAM_MARK)
+            if (Students[i].getExamsAvg() < MIN_EXAM_MARK)
             {
-                students.Remove(students[i]);
+                Students.Remove(Students[i]);
             }
         }
         }
@@ -179,14 +206,14 @@ public void exmatriculateWorst()
         {
             int indWorst = 0;
 
-            for (int i = 1; i < students.Count; i++)
+            for (int i = 1; i < Students.Count; i++)
             {
-                if (students[i].getMarkAvg() < students[indWorst].getMarkAvg())
+                if (Students[i].getMarkAvg() < Students[indWorst].getMarkAvg())
                 {
                     indWorst = i;
                 }
             }
-            students.Remove(students[indWorst]);
+            Students.Remove(Students[indWorst]);
         }
         catch(NullReferenceException e)
         {
@@ -194,26 +221,7 @@ public void exmatriculateWorst()
         }
     }
 
-    public void setGroupName(string name)
-    { this.groupName = name; }
-
-    public void setSpec(string spec)
-    { this.specialization = spec; }
-
-    public void setID(int id)
-    { this.courseID = id; }
-
-    public string getGroupName()
-    { return groupName; }
-
-    public string getSpec()
-    { return specialization; }
-
-    public int getID()
-    { return courseID; }
-
-    public List<Student> GetStudents()
-    { return students; }
+   
 
     public static Boolean operator ==(Group left, Group right)
     {
@@ -224,7 +232,7 @@ public void exmatriculateWorst()
 
         else if ((Object)right != null)
         {
-            return (left.GetStudents().Count == right.GetStudents().Count);
+            return (left.Students.Count == right.Students.Count);
         }
 
         return false;
@@ -242,7 +250,7 @@ public void exmatriculateWorst()
             Group m = obj as Group;
             if (m != null)
             {
-                return (m.GetStudents().Count == GetStudents().Count);
+                return (m.Students.Count == Students.Count);
             }
         }
 
