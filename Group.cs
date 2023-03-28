@@ -127,8 +127,6 @@ class Group
 
     public void addStudent(Student student)
     {
-
-
         try
         {
             if (student == null)
@@ -151,7 +149,6 @@ class Group
 
     public void changeGroups(int ID, ref Group second)
     {
-        
         try
         {
             if (second == null)
@@ -201,7 +198,6 @@ class Group
 
 public void exmatriculateWorst()
     {
-
         try
         {
             int indWorst = 0;
