@@ -291,9 +291,5 @@ public void exmatriculateWorst()
             return studentsOut;
         }
     }
-
-
-
-
 }
 
