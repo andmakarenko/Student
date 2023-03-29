@@ -66,11 +66,11 @@ namespace StudentClass
             List<int> testListNull = null;
 
 
-            Console.WriteLine($"{testStudent.getExamsAvg()}"); //cant get avg if exams list is null
-            testGroup.addStudent(testStudentNull);             // cant add null obj
-            testGroup.changeGroups(1, ref testGroupNull);      // second group null
-            testGroup.changeGroups(3000, ref testGroup2);      // student id 3000 - out of range 
-            testGroup.exmatriculate();                         // if students == null throw nullref
+            //Console.WriteLine($"{testStudent.getExamsAvg()}"); //cant get avg if exams list is null
+            //testGroup.addStudent(testStudentNull);             // cant add null obj
+            //testGroup.changeGroups(1, ref testGroupNull);      // second group null
+            //testGroup.changeGroups(3000, ref testGroup2);      // student id 3000 - out of range 
+            //testGroup.exmatriculate();                         // if students == null throw nullref
 
 
 
@@ -83,7 +83,10 @@ namespace StudentClass
             Console.WriteLine(testGroup.ToString());
             Console.WriteLine(testStudent.ToString());
             //Console.WriteLine(testGroup[54]);         // index out of range exception
-            Console.WriteLine(testGroup["Christoph"]);
+            Console.WriteLine(testGroup["Christoph"]);  // indexer using name
+
+            Aspirant aspirant = new Aspirant("Michael", "PHELPS", "Muscle Growth");
+            Console.WriteLine(aspirant.ToString());
 
             #endregion
 

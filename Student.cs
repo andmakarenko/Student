@@ -5,22 +5,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-class Student
+class Student : Person
 {
     public static int ID_gen = 0;
-
-    string name;
-    string lastName;
-
-    public Address Address
-    {
-        get; set;
-    }
-
-    public DateTime BirthDate
-    {
-        get; set;
-    }
 
     public List<int> Marks
     {
@@ -38,56 +25,21 @@ class Student
     }
 
     public int Id
-    { get; }
-
-    public string Name
-    {
-        get
-        {
-            return name;
-        }
-        private set
-        {
-            if (value.Length < 3)
-            {
-                throw new Exception("Names shorter than 3 characters not allowed.");
-            }
-            name = value;
-        }
-    }
-
-    public string LastName
-    {
-        get
-        {
-            return lastName;
-        }
-        private set
-        {
-            if (value.Length < 3)
-            {
-                throw new Exception("Last names shorter than 3 characters not allowed.");
-            }
-            lastName = value;
-        }
+    { 
+        get; 
     }
 
     public Student() :
         this("defName", "defLastName")
-    {
-    }
+    { }
 
     public Student(string name, string lastName) :
         this(name, lastName, new Address(), DateTime.Now)
-    { 
-    }
+    { }
 
-    public Student(string name, string lastName, Address address, DateTime birthDate)
+    public Student(string name, string lastName, Address address, DateTime birthDate):
+        base(name, lastName, address, birthDate)
     {
-        Name = name;
-        LastName = lastName;
-        Address = address;
-        BirthDate = birthDate;
 
         Marks = new List<int>();
         Hw = new List<int>();
@@ -166,7 +118,7 @@ class Student
 
     public override string ToString()
     {
-        return ($"{string.Join(" ", LastName)} {string.Join(" ", Name)} |Address:{Address.ToString()}|Date of Birth: {BirthDate.ToString()}\nMarks: {string.Join(" ", Marks)}\nHw: {string.Join(" ", Hw)}\nExams: {string.Join(" ", Exams)}");
+        return base.ToString() + $"Marks: {string.Join(" ", Marks)}\nHw: {string.Join(" ", Hw)}\nExams: {string.Join(" ", Exams)}";
     }
 
     public static Boolean operator ==(Student left, Student right)

@@ -13,8 +13,7 @@ class Address
 
     public Address() :
         this("defCountry", "defCity", "defStreet", 0)
-    {
-    }
+    { }
 
     public Address(string country, string city, string street, int stNum)
     {
