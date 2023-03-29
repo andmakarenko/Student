@@ -253,5 +253,47 @@ public void exmatriculateWorst()
         return false;
     }
 
+    //доступ по индексу
+    public Student this[int index]
+    { 
+        get
+        {
+            if (index < 0 || index >= Students.Count)
+                throw new IndexOutOfRangeException("Student index out of range.");
+
+
+            return Students[index];
+        }
+        set
+        {
+            if (value == null)
+                throw new ArgumentNullException("Cant assign a student value to null.");
+
+            Students[index] = value;
+        }
+    }
+
+    //перегрузка индексатора, доступ по имени
+    public List<Student> this[string name]
+    {
+        get
+        {
+            List<Student> studentsOut = new List<Student>();
+            foreach (Student student in Students)
+            {
+                if (student.Name == name)
+                    studentsOut.Add(student);
+            }
+
+            if (studentsOut.Count == 0)
+                Console.WriteLine("No students with such names found.");
+
+            return studentsOut;
+        }
+    }
+
+
+
+
 }
 

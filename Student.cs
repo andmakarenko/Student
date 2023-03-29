@@ -24,17 +24,17 @@ class Student
 
     public List<int> Marks
     {
-        get; set;
+        get;
     }
 
     public List<int> Hw
     {
-        get; set;
+        get;
     }
 
     public List<int> Exams
     {
-        get; set;
+        get;
     }
 
     public int Id
@@ -74,11 +74,13 @@ class Student
 
     public Student() :
         this("defName", "defLastName")
-    { }
+    {
+    }
 
     public Student(string name, string lastName) :
         this(name, lastName, new Address(), DateTime.Now)
-    { }
+    { 
+    }
 
     public Student(string name, string lastName, Address address, DateTime birthDate)
     {
@@ -164,7 +166,7 @@ class Student
 
     public override string ToString()
     {
-        return ($"{string.Join(" ", lastName)} {string.Join(" ", name)} |Address:{Address.ToString()}|Date of Birth: {BirthDate.ToString()}\nMarks: {string.Join(" ", Marks)}\nHw: {string.Join(" ", Hw)}\nExams: {string.Join(" ", Exams)}");
+        return ($"{string.Join(" ", LastName)} {string.Join(" ", Name)} |Address:{Address.ToString()}|Date of Birth: {BirthDate.ToString()}\nMarks: {string.Join(" ", Marks)}\nHw: {string.Join(" ", Hw)}\nExams: {string.Join(" ", Exams)}");
     }
 
     public static Boolean operator ==(Student left, Student right)
