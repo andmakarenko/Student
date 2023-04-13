@@ -5,9 +5,10 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-class Student : Person
+class Student : Person, IComparable<Student>
 {
     public static int ID_gen = 0;
+    private static Random rand = new Random();
 
     public List<int> Marks
     {
@@ -53,9 +54,6 @@ class Student : Person
 
     private void generateCollections()
     {
-
-        Random rand = new Random();
-
         try
         {
             for (int i = 0; i < 10; i++)
@@ -114,7 +112,26 @@ class Student : Person
         return avg;
     }
     
+    public float GetHwAvg()
+    {
+        float avg = 0;
 
+        try
+        {
+            foreach(int hw in Hw)
+            {
+                avg += (float)hw;
+            }
+
+            avg /= Hw.Count;
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine($"GetHwAvg failed: {e.Message}");
+        }
+
+        return avg;
+    }
 
     public override string ToString()
     {
@@ -152,5 +169,21 @@ class Student : Person
         }
 
         return false;
+    }
+
+    public int CompareTo(Student other)
+    {
+        if (other == null)
+            throw new ArgumentNullException("Comparison to a null reference.");
+
+        if (GetHwAvg() < other.GetHwAvg())
+            return -1;
+
+        if (GetHwAvg() == other.GetHwAvg())
+            return 0;
+
+        else
+            return 1;
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -30,6 +31,9 @@ namespace StudentClass
             //
             //Student s1 = new Student("Henry", "EDWARDS");
             //Student s2 = new Student("Second", "STUDENT");
+
+            //Console.WriteLine(s1.ToString() + "\n" + s2.ToString());
+
             //g1.addStudent(s1);
             //Console.WriteLine(g1.ToString());
             //
@@ -57,13 +61,13 @@ namespace StudentClass
 
             #region Testing Exceptions
 
-            Student testStudent = new Student("Christoph", "JAMES");
-            Group testGroup = new Group();
-            Group testGroup2 = new Group();
-            Group testGroupNull = null;
-            Student testStudentNull = null;
-            List<int> testList = new List<int>{1,2,3,4,5,6,7,8,9,10,11 };
-            List<int> testListNull = null;
+            //Student testStudent = new Student("Christoph", "JAMES");
+            //Group testGroup = new Group();
+            //Group testGroup2 = new Group();
+            //Group testGroupNull = null;
+            //Student testStudentNull = null;
+            //List<int> testList = new List<int>{1,2,3,4,5,6,7,8,9,10,11 };
+            //List<int> testListNull = null;
 
 
             //Console.WriteLine($"{testStudent.getExamsAvg()}"); //cant get avg if exams list is null
@@ -79,14 +83,53 @@ namespace StudentClass
 
             #region Testing indexers
 
-            testGroup[1] = testStudent;
-            Console.WriteLine(testGroup.ToString());
-            Console.WriteLine(testStudent.ToString());
-            //Console.WriteLine(testGroup[54]);         // index out of range exception
-            Console.WriteLine(testGroup["Christoph"]);  // indexer using name
+            //testGroup[1] = testStudent;
+            //Console.WriteLine(testGroup.ToString());
+            //Console.WriteLine(testStudent.ToString());
+            ////Console.WriteLine(testGroup[54]);         // index out of range exception
+            //Console.WriteLine(testGroup["Christoph"]);  // indexer using name
+            //
+            //Aspirant aspirant = new Aspirant("Michael", "PHELPS", "Muscle Growth");
+            //Console.WriteLine(aspirant.ToString());
 
-            Aspirant aspirant = new Aspirant("Michael", "PHELPS", "Muscle Growth");
-            Console.WriteLine(aspirant.ToString());
+            #endregion
+
+            #region Comparer
+
+            Student[] students = new Student[3];
+            //
+            students[0] = new Student("Mark", "Wahlberg");
+            students[1] = new Student("Kendrick", "Lamar");
+            students[2] = new Student("Kyrie", "Irving");
+
+            Console.WriteLine(students[0].ToString() + "\n" + students[1].ToString());
+            
+            //Array.Sort(students, new NameComparer());
+            //
+            //foreach (var student in  students)
+            //{
+            //    Console.WriteLine(student);
+            //}
+
+            #endregion
+
+            #region Comparable
+
+            foreach (Student student in students)
+            {
+                Console.WriteLine(student.ToString());
+                Console.WriteLine($"Hw avg: {student.GetHwAvg()}");
+            }
+            
+            Array.Sort(students);
+            
+            Console.WriteLine();
+            
+            foreach (Student student in students)
+            {
+                Console.WriteLine(student.ToString());
+                Console.WriteLine($"Hw avg: {student.GetHwAvg()}");
+            }
 
             #endregion
 
