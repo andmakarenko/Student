@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-class Group
+class Group : IEnumerable
 {
     const int DEFAULT_STUDENT_NUM = 10;
     const int MIN_EXAM_MARK = 7;
@@ -290,6 +291,11 @@ public void exmatriculateWorst()
 
             return studentsOut;
         }
+    }
+
+    public IEnumerator GetEnumerator()
+    {
+        return new StudentEnumerator(Students);
     }
 }
 

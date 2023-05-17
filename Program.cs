@@ -18,12 +18,12 @@ namespace StudentClass
         {
             #region Testing Group and Student methods
 
-            //Group g1 = new Group();
+            Group g1 = new Group();
             //Group g2 = new Group();
             //Group g3 = new Group();
             //
-            //g1.GroupName = "Group 1";
-            //g1.Specialization = "Computer Science";
+            g1.GroupName = "Group 1";
+            g1.Specialization = "Computer Science";
             //g2.GroupName = "Group 2";
             //g2.Specialization = "Visual Computing";
             //
@@ -102,7 +102,7 @@ namespace StudentClass
             students[1] = new Student("Kendrick", "Lamar");
             students[2] = new Student("Kyrie", "Irving");
 
-            Console.WriteLine(students[0].ToString() + "\n" + students[1].ToString());
+            //Console.WriteLine(students[0].ToString() + "\n" + students[1].ToString());
             
             //Array.Sort(students, new NameComparer());
             //
@@ -115,20 +115,49 @@ namespace StudentClass
 
             #region Comparable
 
-            foreach (Student student in students)
-            {
-                Console.WriteLine(student.ToString());
-                Console.WriteLine($"Hw avg: {student.GetHwAvg()}");
-            }
+            //foreach (Student student in students)
+            //{
+            //    Console.WriteLine(student.ToString());
+            //    //Console.WriteLine($"Hw avg: {student.GetHwAvg()}");
+            //}
             
-            Array.Sort(students);
+            //Array.Sort(students);
             
+            //Console.WriteLine();
+            //
+            //foreach (Student student in students)
+            //{
+            //    Console.WriteLine(student.ToString());
+            //    Console.WriteLine($"Hw avg: {student.GetHwAvg()}");
+            //}
+
             Console.WriteLine();
-            
-            foreach (Student student in students)
+
+
+            #endregion
+
+            #region Comparer
+
+            //Array.Sort(students, new ExamsComparer());
+            //
+            //foreach (Student student in students)
+            //{
+            //    Console.WriteLine(student.ToString());
+            //    Console.WriteLine($"Exams avg: {student.getExamsAvg()}");
+            //}
+
+            #endregion
+
+
+            #region Enumerator
+
+            g1.addStudent(students[0]);
+            g1.addStudent(students[1]);
+            g1.addStudent(students[2]);
+
+            foreach(Student student in students)
             {
                 Console.WriteLine(student.ToString());
-                Console.WriteLine($"Hw avg: {student.GetHwAvg()}");
             }
 
             #endregion

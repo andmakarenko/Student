@@ -14,3 +14,20 @@ class NameComparer : IComparer<Student>
     }
 }
 
+class ExamsComparer : IComparer<Student>
+{
+    public int Compare(Student left, Student right)
+    {
+        if (left == null || right == null)
+            throw new ArgumentNullException();
+
+        if (left.getExamsAvg() > right.getExamsAvg())
+            return -1;
+        else if (left.getExamsAvg() == right.getExamsAvg())
+            return 0;
+        else
+            return 1;
+    }
+}
+
+
